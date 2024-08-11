@@ -1,9 +1,12 @@
-import 'package:bookly_app/features/splash/presentation/views/widgets/BestSellerBookCard.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:bookly_app/core/utils/api_service.dart';
 import 'package:bookly_app/features/home/data/models/books/books.dart';
+
+import 'BestSellerBookCard.dart';
 class BestSellerListView extends StatefulWidget {
+  const BestSellerListView({super.key});
+
   @override
   _BestSellerListViewState createState() => _BestSellerListViewState();
 }
@@ -40,7 +43,7 @@ class _BestSellerListViewState extends State<BestSellerListView> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return SliverToBoxAdapter(
+      return const SliverToBoxAdapter(
         child: Center(child: CircularProgressIndicator()),
       );
     } else if (errorMessage.isNotEmpty) {

@@ -1,13 +1,13 @@
+import 'package:bookly_app/features/home/presentation/views/widgets/BestSellerListView.dart';
+import 'package:bookly_app/features/home/presentation/views/widgets/FirstListView.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:bookly_app/core/utils/api_service.dart';
 import 'package:bookly_app/features/home/data/models/books/books.dart';
-import 'package:bookly_app/features/splash/presentation/views/widgets/FirstListView.dart';
-import 'package:bookly_app/features/splash/presentation/views/widgets/BestSellerListView.dart';
 import 'package:bookly_app/core/utils/styles.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen>
         opacity: _animation,
         child: Column(
           children: [
-            SizedBox(height:30),
+            const SizedBox(height:30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
               child: Row(
@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen>
                       ),
                     ),
                   ),
-                  BestSellerListView(),
+                  const BestSellerListView(),
                 ],
               ),
             ),

@@ -1,8 +1,9 @@
 import 'package:bookly_app/features/home/data/models/books/books.dart';
-import 'package:bookly_app/features/splash/presentation/views/widgets/BookDetailScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bookly_app/features/splash/presentation/views/splash_screen.dart';
+
+import 'features/home/presentation/views/widgets/BookDetailScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.montserratTextTheme(
           Theme.of(context).textTheme,
         ),
-        scaffoldBackgroundColor: Color(0xff100B20),
+        scaffoldBackgroundColor: const Color(0xff100B20),
       ),
       home: const SplashScreen(),
     );

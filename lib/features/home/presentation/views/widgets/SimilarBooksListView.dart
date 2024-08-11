@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:bookly_app/features/home/data/models/books/books.dart'; // Adjust import based on your project structure
-import 'package:bookly_app/features/splash/presentation/views/widgets/BookDetailScreen.dart'; // Import the DetailsScreen
+import 'package:bookly_app/features/home/data/models/books/books.dart';
+
+import 'BookDetailScreen.dart'; // Adjust import based on your project structure
 
 class SimilarBooksListView extends StatelessWidget {
   final List<Books> similarBooks;
 
-  const SimilarBooksListView({Key? key, required this.similarBooks}) : super(key: key);
+  const SimilarBooksListView({super.key, required this.similarBooks});
 
   @override
   Widget build(BuildContext context) {

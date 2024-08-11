@@ -1,9 +1,10 @@
-import 'package:bookly_app/features/splash/presentation/views/widgets/BookDetailScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:bookly_app/features/home/data/models/books/books.dart';
 
+import 'BookDetailScreen.dart';
+
 class Firstlistview extends StatefulWidget {
-  const Firstlistview({Key? key, required this.books}) : super(key: key);
+  const Firstlistview({super.key, required this.books});
 
   final List<Books>? books;
 

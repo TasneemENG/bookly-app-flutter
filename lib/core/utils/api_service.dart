@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:bookly_app/features/home/data/models/books/books.dart';
+
 class ApiService {
   final Dio dio;
   final String baseUrl = 'https://www.googleapis.com/books/v1/volumes?';
@@ -13,7 +14,8 @@ class ApiService {
         final Map<String, dynamic> responseData = response.data;
         final List<dynamic> items = responseData['items'] ?? [];
 
-        List<Books> bookList = items.map((json) => Books.fromJson(json)).toList();
+        List<Books> bookList =
+            items.map((json) => Books.fromJson(json)).toList();
         return bookList;
       } else {
         throw Exception('Failed to load books');
@@ -21,5 +23,10 @@ class ApiService {
     } catch (e) {
       throw Exception('Failed to load books: $e');
     }
+  }
+
+  Future<Map<String, dynamic>> get({required String endPoint}) async {
+    var response = await dio.get('$baseUrl$endPoint');
+    return response.data;
   }
 }

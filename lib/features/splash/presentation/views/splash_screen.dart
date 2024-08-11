@@ -1,8 +1,9 @@
-import 'package:bookly_app/features/splash/presentation/views/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:bookly_app/features/splash/presentation/views/widgets/splash_body.dart';
+
+import '../../../home/presentation/views/HomeScreen.dart';
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -24,8 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const SplashBody(),
+    return const Scaffold(
+      body: SplashBody(),
     );
   }
 }
