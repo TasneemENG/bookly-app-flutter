@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/features/home/data/models/books/books.dart';
+
+import '../../../../../core/utils/styles.dart';
 
 class BestSellerBookCard extends StatelessWidget {
   final Books book;

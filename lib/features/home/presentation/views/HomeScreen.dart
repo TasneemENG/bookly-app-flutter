@@ -2,8 +2,8 @@ import 'package:bookly_app/features/home/presentation/views/widgets/BestSellerLi
 import 'package:bookly_app/features/home/presentation/views/widgets/FirstListView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bookly_app/core/utils/styles.dart';
 
+import '../../../../core/utils/styles.dart';
 import '../manger/all_books/newst_books_cubit.dart';
 
 import '../manger/best_sellers/featured_books_cubit.dart';
