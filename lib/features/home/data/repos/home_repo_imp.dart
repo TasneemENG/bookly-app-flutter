@@ -1,11 +1,9 @@
 
 import 'package:bookly_app/features/home/data/models/books/books.dart';
 import 'package:dartz/dartz.dart';
-
 import 'package:dio/dio.dart';
-
 import '../../../../core/errors/failures.dart';
-import '../../../../core/utils/api_service.dart';
+import '../../../../core/network/api_service.dart';
 import 'home_repo.dart';
 
 class HomeRepoImpl implements HomeRepo {

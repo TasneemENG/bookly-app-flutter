@@ -36,15 +36,18 @@ class _FirstlistviewState extends State<Firstlistview> {
 
             return GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailsScreen(
-                      book: book,
-                      similarBooks: similarBooks, // Pass similar books
+                // Ensure navigation occurs safely
+                if (Navigator.canPop(context)) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailsScreen(
+                        book: book,
+                        similarBooks: similarBooks, // Pass similar books
+                      ),
                     ),
-                  ),
-                );
+                  );
+                }
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),

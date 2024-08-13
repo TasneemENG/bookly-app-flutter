@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bookly_app/features/home/data/models/books/books.dart';
 
-import 'BookDetailScreen.dart'; // Adjust import based on your project structure
-
+import 'BookDetailScreen.dart';
 class SimilarBooksListView extends StatelessWidget {
   final List<Books> similarBooks;
 
@@ -15,6 +14,8 @@ class SimilarBooksListView extends StatelessWidget {
       itemCount: similarBooks.length,
       itemBuilder: (context, index) {
         final book = similarBooks[index];
+        final imageUrl = book.volumeInfo?.imageLinks?.thumbnail ?? '';
+
         return GestureDetector(
           onTap: () {
             Navigator.push(
@@ -37,11 +38,12 @@ class SimilarBooksListView extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
-                      image: NetworkImage(book.volumeInfo?.imageLinks?.thumbnail ?? ''),
-                      fit: BoxFit.fill,
+                      image: NetworkImage(imageUrl),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
+
               ],
             ),
           ),

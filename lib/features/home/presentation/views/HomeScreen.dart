@@ -1,10 +1,13 @@
 import 'package:bookly_app/features/home/presentation/views/widgets/BestSellerListView.dart';
 import 'package:bookly_app/features/home/presentation/views/widgets/FirstListView.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:bookly_app/core/utils/api_service.dart';
-import 'package:bookly_app/features/home/data/models/books/books.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookly_app/core/utils/styles.dart';
+
+import '../manger/all_books/newst_books_cubit.dart';
+
+import '../manger/best_sellers/featured_books_cubit.dart';
+import '../manger/best_sellers/featured_books_state.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,10 +18,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
-  late ApiService apiService;
-  List<Books>? books;
-  bool isLoading = true;
-  String errorMessage = '';
   late AnimationController _animationController;
   late Animation<double> _animation;
   final ScrollController _scrollController = ScrollController();
@@ -26,8 +25,6 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-    apiService = ApiService(dio: Dio());
-    fetchBooks();
 
     _animationController = AnimationController(
       vsync: this,
@@ -40,32 +37,13 @@ class _HomeScreenState extends State<HomeScreen>
     );
 
     _animationController.forward();
-  }
 
-  Future<void> fetchBooks() async {
-    try {
-      List<Books> fetchedBooks =
-      await apiService.getBooks('orderBy=newest&q=computer%20science');
-      setState(() {
-        books = fetchedBooks;
-        isLoading = false;
-        errorMessage = '';
-      });
-
-      // Automatically scroll to a predefined position
-      if (!isLoading && books!.isNotEmpty) {
-        _scrollToPosition();
-      }
-    } catch (e) {
-      setState(() {
-        errorMessage = 'Failed to load books: $e';
-        isLoading = false;
-      });
-    }
+    // Fetch the books using the cubits
+    context.read<NewstBooksCubit>().fetchNewstBooks();
+    context.read<FeaturedBooksCubit>().fetchFeaturedBooks();
   }
 
   void _scrollToPosition() {
-    // Replace 500 with the desired scroll offset or calculate dynamically
     _scrollController.animateTo(
       500,
       duration: const Duration(milliseconds: 500),
@@ -83,21 +61,11 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff100B20),
-      body: _buildBody(),
-    );
-  }
-
-  Widget _buildBody() {
-    if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    } else if (errorMessage.isNotEmpty) {
-      return Center(child: Text(errorMessage));
-    } else {
-      return FadeTransition(
+      body: FadeTransition(
         opacity: _animation,
         child: Column(
           children: [
-            const SizedBox(height:30),
+            const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
               child: Row(
@@ -120,8 +88,24 @@ class _HomeScreenState extends State<HomeScreen>
               child: CustomScrollView(
                 controller: _scrollController,
                 slivers: [
-                  SliverToBoxAdapter(
-                    child: Firstlistview(books: books),
+                  BlocBuilder<FeaturedBooksCubit, FeaturedBooksState>(
+                    builder: (context, state) {
+                      if (state is FeaturedBooksLoading) {
+                        return const SliverToBoxAdapter(
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      } else if (state is FeaturedBooksFailure) {
+                        return SliverToBoxAdapter(
+                          child: Center(child: Text(state.errMessage)),
+                        );
+                      } else if (state is FeaturedBooksSuccess) {
+                        _scrollToPosition(); // Scroll to position after loading
+                        return SliverToBoxAdapter(
+                          child: Firstlistview(books: state.books),
+                        );
+                      }
+                      return const SliverToBoxAdapter();
+                    },
                   ),
                   SliverPadding(
                     padding: const EdgeInsets.all(16),
@@ -132,13 +116,28 @@ class _HomeScreenState extends State<HomeScreen>
                       ),
                     ),
                   ),
-                  const BestSellerListView(),
+                  BlocBuilder<FeaturedBooksCubit, FeaturedBooksState>(
+                    builder: (context, state) {
+                      if (state is FeaturedBooksLoading) {
+                        return const SliverToBoxAdapter(
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      } else if (state is FeaturedBooksFailure) {
+                        return SliverToBoxAdapter(
+                          child: Center(child: Text(state.errMessage)),
+                        );
+                      } else if (state is FeaturedBooksSuccess) {
+                        return NewstBooksListView();
+                      }
+                      return const SliverToBoxAdapter();
+                    },
+                  ),
                 ],
               ),
             ),
           ],
         ),
-      );
-    }
+      ),
+    );
   }
 }

@@ -1,5 +1,8 @@
 import 'package:bookly_app/core/utils/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../../core/utils/app_router.dart';
 
 class SplashBody extends StatefulWidget {
   const SplashBody({super.key});
@@ -27,6 +30,7 @@ class _SplashBodyState extends State<SplashBody>
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
 
     animationController.forward();
+    navigateToHome();
   }
 
   @override
@@ -58,4 +62,14 @@ class _SplashBodyState extends State<SplashBody>
       ],
     );
   }
+
+  void navigateToHome() {
+      Future.delayed(
+        const Duration(seconds: 2),
+            () {
+
+          GoRouter.of(context).push(AppRouter.kHomeView);
+        },
+      );
+    }
 }

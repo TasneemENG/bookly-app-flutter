@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:bookly_app/core/utils/styles.dart';
 import 'package:bookly_app/features/home/data/models/books/books.dart';
-
+import '../../../../../core/utils/styles.dart';
 import 'SimilarBooksListView.dart'; // Adjust import based on your project structure
 
 class DetailsScreen extends StatelessWidget {
   final Books book;
-  final List<Books>? similarBooks;
+  final List<Books>? similarBooks; // Ensure this is included
 
-  const DetailsScreen({super.key, required this.book, this.similarBooks});
+  const DetailsScreen({super.key, required this.book, this.similarBooks}); // Ensure this is included
 
   @override
   Widget build(BuildContext context) {
